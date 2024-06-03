@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://o63v4kbqp127"]
+
+[ext_resource type="Texture2D" uid="uid://csgis3tp7svp" path="res://addons/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_c47pw"]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(0, -1)
+
+[node name="WarriorBlue" type="Sprite2D" parent="."]
+position = Vector2(535, 730)
+texture = ExtResource("1_c47pw")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv7bxdch211hm"]
+
+[ext_resource type="Texture2D" uid="uid://csgis3tp7svp" path="res://addons/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_04nn4"]
+[ext_resource type="PackedScene" uid="uid://b3hpra1fo7d3p" path="res://Player/player.tscn" id="2_ddhh0"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="WarriorBlue" type="Sprite2D" parent="."]
+position = Vector2(1835, 787)
+texture = ExtResource("1_04nn4")
+
+[node name="Label" type="Label" parent="WarriorBlue"]
+offset_left = -600.0
+offset_top = -696.0
+offset_right = -560.0
+offset_bottom = -673.0
+scale = Vector2(1.68, 2)
+text = "idle"
+
+[node name="Label2" type="Label" parent="WarriorBlue"]
+offset_left = -603.0
+offset_top = -503.0
+offset_right = -563.0
+offset_bottom = -480.0
+scale = Vector2(1.68, 2)
+text = "run"
+
+[node name="Player" parent="." instance=ExtResource("2_ddhh0")]

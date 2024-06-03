@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Tiny Swords"
+run/main_scene="res://test_scenes/test_players.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="Tiny Swords"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
