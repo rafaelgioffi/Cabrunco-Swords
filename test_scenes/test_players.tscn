@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bv7bxdch211hm"]
+[gd_scene load_steps=4 format=3 uid="uid://bv7bxdch211hm"]
 
 [ext_resource type="Texture2D" uid="uid://csgis3tp7svp" path="res://addons/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_04nn4"]
 [ext_resource type="PackedScene" uid="uid://b3hpra1fo7d3p" path="res://Player/player.tscn" id="2_ddhh0"]
+[ext_resource type="PackedScene" uid="uid://b2mq3dycs6xpu" path="res://enemies/pawn.tscn" id="3_weo2f"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -26,3 +27,22 @@ scale = Vector2(1.68, 2)
 text = "run"
 
 [node name="Player" parent="." instance=ExtResource("2_ddhh0")]
+position = Vector2(457, 251)
+
+[node name="Pawn" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(615, 937)
+
+[node name="Pawn2" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(444, 952)
+
+[node name="Pawn3" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(578, 824)
+
+[node name="Pawn4" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(731, 921)
+
+[node name="Pawn5" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(440, 744)
+
+[node name="Pawn6" parent="." instance=ExtResource("3_weo2f")]
+position = Vector2(719, 749)

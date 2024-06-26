@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://opxgbmkf8ery"]
+
+[ext_resource type="PackedScene" uid="uid://b3hpra1fo7d3p" path="res://Player/player.tscn" id="1_60eak"]
+[ext_resource type="Texture2D" uid="uid://cias8sk85ieh4" path="res://addons/Tiny Swords/UI/Banners/Banner_Horizontal.png" id="2_mxxk6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_00m8l"]
+texture = ExtResource("2_mxxk6")
+texture_margin_left = 32.0
+texture_margin_top = 16.0
+texture_margin_right = 32.0
+texture_margin_bottom = 48.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+region_rect = Rect2(32, 48, 128, 128)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p17ft"]
+font_color = Color(0.882353, 0.803922, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="TestUi" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_60eak")]
+position = Vector2(611, 353)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = 14.0
+offset_right = 48.0
+offset_bottom = 37.0
+grow_horizontal = 2
+text = "08:50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="Panel" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 15.0
+offset_right = -13.0
+offset_bottom = 86.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_00m8l")
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -32.0
+offset_right = -30.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "120,000 Gold"
+label_settings = SubResource("LabelSettings_p17ft")
+
+[node name="MeatLabel" type="Label" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = -32.0
+offset_right = 123.0
+offset_bottom = -9.0
+grow_vertical = 2
+text = "50 Meat"
+label_settings = SubResource("LabelSettings_p17ft")
