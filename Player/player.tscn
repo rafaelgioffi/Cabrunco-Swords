@@ -1,14 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3hpra1fo7d3p"]
+[gd_scene load_steps=28 format=3 uid="uid://b3hpra1fo7d3p"]
 
 [ext_resource type="Texture2D" uid="uid://csgis3tp7svp" path="res://addons/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_25wuf"]
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qr2rj"]
 [ext_resource type="PackedScene" uid="uid://djmywu6enmsv0" path="res://misc/big_skull.tscn" id="2_b2th1"]
 [ext_resource type="PackedScene" uid="uid://cfcm606o4myvn" path="res://misc/ritual.tscn" id="2_xk38y"]
-[ext_resource type="Texture2D" uid="uid://dk5dk0rlehtex" path="res://Player/pm-sheet-walk.png" id="5_gkv1f"]
+[ext_resource type="StyleBox" uid="uid://n48qoxw1fets" path="res://Player/mid_life.tres" id="6_13r01"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qjqt7"]
-radius = 26.0
-height = 78.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_3m1ow"]
+radius = 35.0143
 
 [sub_resource type="Animation" id="Animation_qhm11"]
 length = 0.001
@@ -23,18 +22,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D2:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_02eei"]
@@ -217,39 +204,40 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_aypr0"]
-resource_name = "run"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_gjie3"]
+resource_name = "bozo_attack1"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1)]
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deal_damage_to_enemies"
+}]
 }
 
-[sub_resource type="Animation" id="Animation_apw7o"]
-resource_name = "test_pm_run"
-length = 0.6
+[sub_resource type="Animation" id="Animation_45x5s"]
+resource_name = "bozo_idle"
+length = 0.1
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D2:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
+
+[sub_resource type="Animation" id="Animation_jtdge"]
+resource_name = "bozo_run"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_kqk52"]
+resource_name = "bozo_walk"
+length = 0.8
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_6yrjp"]
+resource_name = "damage_player"
+length = 0.6
 
 [sub_resource type="Animation" id="Animation_0lsm5"]
 resource_name = "idle"
@@ -268,6 +256,56 @@ tracks/0/keys = {
 "values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_gnydc"]
+resource_name = "lobo_run"
+length = 1.5
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_aypr0"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_b6egd"]
+resource_name = "touro_attack1"
+length = 1.3
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deal_damage_to_enemies"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_o71y3"]
+resource_name = "touro_run"
+length = 0.7
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_mdq5r"]
+resource_name = "touro_walk"
+length = 0.8
+loop_mode = 1
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yaoae"]
 _data = {
 "RESET": SubResource("Animation_qhm11"),
@@ -277,18 +315,21 @@ _data = {
 "attack_side_2": SubResource("Animation_65xpc"),
 "attack_up_1": SubResource("Animation_yu2ha"),
 "attack_up_2": SubResource("Animation_1albu"),
+"bozo_attack1": SubResource("Animation_gjie3"),
+"bozo_idle": SubResource("Animation_45x5s"),
+"bozo_run": SubResource("Animation_jtdge"),
+"bozo_walk": SubResource("Animation_kqk52"),
+"damage_player": SubResource("Animation_6yrjp"),
 "idle": SubResource("Animation_0lsm5"),
+"lobo_run": SubResource("Animation_gnydc"),
 "run": SubResource("Animation_aypr0"),
-"test_pm_run": SubResource("Animation_apw7o")
+"touro_attack1": SubResource("Animation_b6egd"),
+"touro_run": SubResource("Animation_o71y3"),
+"touro_walk": SubResource("Animation_mdq5r")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xnm8l"]
 radius = 146.031
-
-[sub_resource type="LabelSettings" id="LabelSettings_bingw"]
-font_size = 11
-outline_size = 1
-outline_color = Color(0, 0.606141, 0.73253, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8bqtp"]
 radius = 46.0109
@@ -304,35 +345,21 @@ death_prefab = ExtResource("2_b2th1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -28)
+position = Vector2(0, -15)
 texture = ExtResource("1_25wuf")
 hframes = 6
 vframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -24)
-shape = SubResource("CapsuleShape2D_qjqt7")
-debug_color = Color(0, 0.717647, 0.835294, 0.254902)
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(0, -42)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("5_gkv1f")
-hframes = 6
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -24)
-shape = SubResource("CapsuleShape2D_qjqt7")
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_3m1ow")
 debug_color = Color(0, 0.717647, 0.835294, 0.254902)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_yaoae")
 }
-autoplay = "idle"
+autoplay = "bozo_walk"
 
 [node name="SwordArea" type="Area2D" parent="."]
 
@@ -341,27 +368,13 @@ position = Vector2(0, -27)
 shape = SubResource("CircleShape2D_xnm8l")
 debug_color = Color(0.984314, 0, 0.352941, 0)
 
-[node name="DamageHUD" type="Label" parent="."]
-offset_left = -13.0
-offset_top = -119.0
-offset_right = 27.0
-offset_bottom = -96.0
-label_settings = SubResource("LabelSettings_bingw")
-
-[node name="PlayerHUD" type="Label" parent="."]
-offset_left = -7.0
-offset_top = -99.0
-offset_right = 33.0
-offset_bottom = -76.0
-text = "100"
-label_settings = SubResource("LabelSettings_bingw")
-
 [node name="HealthBar" type="ProgressBar" parent="."]
-modulate = Color(0, 0.580392, 0.631373, 1)
 offset_left = -44.0
-offset_top = -95.0
-offset_right = 56.0
-offset_bottom = -85.0
+offset_top = 21.0
+offset_right = 46.0
+offset_bottom = 32.0
+theme_override_styles/background = ExtResource("6_13r01")
+theme_override_styles/fill = ExtResource("6_13r01")
 step = 1.0
 value = 100.0
 rounded = true

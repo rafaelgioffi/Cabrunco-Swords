@@ -14,3 +14,4 @@ sword_damage = 2
 
 [node name="MobSpawner" parent="." instance=ExtResource("2_hs3ca")]
 creatures = Array[PackedScene]([ExtResource("3_2gnwb"), ExtResource("4_8v2rl"), ExtResource("5_uieth")])
+frequency_mob_lv1 = 10.0

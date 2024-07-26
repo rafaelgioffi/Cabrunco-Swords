@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://ch228tfwb0jl1"]
+[gd_scene load_steps=17 format=3 uid="uid://ch228tfwb0jl1"]
 
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_iruvl"]
 [ext_resource type="PackedScene" uid="uid://wpqwqorhe3ax" path="res://misc/skull.tscn" id="2_njj7k"]
 [ext_resource type="Texture2D" uid="uid://d3dj6ec8586l1" path="res://addons/Tiny Swords/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="3_8urcw"]
+[ext_resource type="PackedScene" uid="uid://bb0mkji48ts0o" path="res://misc/meat.tscn" id="3_dl4qr"]
 [ext_resource type="Script" path="res://enemies/behaviors/follow_player.gd" id="4_1gt1x"]
+[ext_resource type="PackedScene" uid="uid://cuf87ga4mpyf8" path="res://misc/golden_meat.tscn" id="4_o8r61"]
 [ext_resource type="LabelSettings" uid="uid://bn0myy2cp2uhx" path="res://enemies/healthbar_font.tres" id="5_de4qy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7l01l"]
@@ -57,8 +59,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5vg8g"]
-radius = 25.0
-height = 66.0
+radius = 11.3333
+height = 48.0327
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xxmvl"]
 blend_mode = 1
@@ -70,6 +72,9 @@ script = ExtResource("1_iruvl")
 health = 20
 death_prefab = ExtResource("2_njj7k")
 level = 3
+drop_chance = 0.3
+drop_items = Array[PackedScene]([ExtResource("3_dl4qr"), ExtResource("4_o8r61")])
+drop_chances = Array[float]([0.9, 0.1])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -25)
@@ -78,7 +83,8 @@ autoplay = "default"
 frame_progress = 0.693934
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -25)
+position = Vector2(2.66667, -6)
+rotation = -1.55678
 shape = SubResource("CapsuleShape2D_5vg8g")
 
 [node name="FollowPlayer" type="Node" parent="."]
@@ -86,6 +92,7 @@ script = ExtResource("4_1gt1x")
 speed = 0.2
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
 modulate = Color(1, 0.0901961, 0.0588235, 1)
 self_modulate = Color(1, 0.211765, 0.160784, 1)
 material = SubResource("CanvasItemMaterial_xxmvl")
@@ -102,9 +109,13 @@ allow_lesser = true
 show_percentage = false
 
 [node name="EnemyHUD" type="Label" parent="."]
+visible = false
 offset_left = 0.666667
 offset_top = -74.0
 offset_right = 40.6667
 offset_bottom = -51.0
 text = "4"
 label_settings = ExtResource("5_de4qy")
+
+[node name="DamageDigitMarker" type="Marker2D" parent="."]
+position = Vector2(0, -62)

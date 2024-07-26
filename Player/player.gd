@@ -7,8 +7,9 @@ extends CharacterBody2D
 @export var sword_damage: int = 2
 @export_category("Ritual")
 @export var ritual_damage: int = 1
-@export var ritual_interval_min: float = 15
-@export var ritual_interval_max: float = 60
+@export var attack_interval: float = 2.0
+@export var ritual_interval_min: float = 30.0
+@export var ritual_interval_max: float = 60.0
 @export var ritual_scene: PackedScene
 @export_category("Life")
 @export var health: int = 100
@@ -16,13 +17,9 @@ extends CharacterBody2D
 @export var death_prefab: PackedScene
 
 @onready var sprite: Sprite2D = $Sprite2D
-#@onready var sprite: Sprite2D = $Sprite2D2
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sword_area: Area2D = $SwordArea
 @onready var hitbox_area: Area2D = $HitboxArea
-
-@onready var damage_hud: Label = $"DamageHUD"
-@onready var player_hud: Label = $"PlayerHUD"
 @onready var healthbar: ProgressBar = $"HealthBar"
 
 var input_vector: Vector2 = Vector2(0, 0)
@@ -32,14 +29,21 @@ var is_attacking: bool = false
 var attack_cooldown: float = 0.0
 var hitbox_cooldown: float = 0.0
 var ritual_cooldown: float = 0.0
+var attack_cooldown2: float = 0.0
+
+signal meat_collected(value: int)
+
+func _ready():
+	GameManager.player = self
+	meat_collected.connect(func(value: int): GameManager.meat_counter += 1)
 
 func _process(delta: float) -> void:
 	GameManager.player_position = position
 	ready_input()
 
 	update_attack_cooldown(delta)
-	if Input.is_action_just_pressed("attack"):
-		attack()
+	#if Input.is_action_just_pressed("attack"):
+		#attack()
 
 	play_run_idle_animation()
 	if not is_attacking:
@@ -48,11 +52,33 @@ func _process(delta: float) -> void:
 	update_hitbox_detection(delta)
 
 	update_ritual(delta)
+	
+	update_attack(delta)
+	
+	player_health_bar()
+
+func player_health_bar():
+	healthbar.max_value = max_health
+	healthbar.value = health
+	
+	var styleBox = StyleBoxFlat.new()
+	
+	if healthbar.value > 50:
+		styleBox.bg_color = Color(0.3, 0.6, 0, 0.3)
+	elif healthbar.value < 50 && healthbar.value > 19:
+		styleBox.bg_color = Color(0.65, 0.63, 0, 1)
+	elif healthbar.value < 20:
+		styleBox.bg_color = Color(1, 0, 0, 1)
+	healthbar.add_theme_stylebox_override("fill", styleBox)
+	var styleBox_bg = StyleBoxFlat.new()
+	styleBox_bg.bg_color = Color(0, 0, 0, 1)
+	healthbar.add_theme_stylebox_override("bg", styleBox_bg)
 
 func _physics_process(delta: float) -> void:
 	var target_velocity = input_vector * speed * 100.0
 	if is_attacking:
-		target_velocity *= 0.25
+		#target_velocity *= 0.25
+		target_velocity *= 1
 	velocity = lerp(velocity, target_velocity, 0.05)
 	move_and_slide()
 
@@ -83,16 +109,16 @@ func play_run_idle_animation() -> void:
 				animation_player.play("run")
 			else:
 				animation_player.play("idle")
-			
 			healthbar.value = health
-			player_hud.text = str(health)
-			damage_hud.text = ""
 
 func rotate_sprite() -> void:
 	if input_vector.x > 0:
 		sprite.flip_h = false
+		GameManager.flip_player = 0
 	elif input_vector.x < 0:
 		sprite.flip_h = true
+		GameManager.flip_player = 1
+	#print(GameManager.flip_player)
 
 func attack() -> void:
 	if is_attacking:
@@ -122,7 +148,7 @@ func deal_damage_to_enemies():
 			if dot_product >= 0.3:
 				var damage_str = str(sword_damage)
 				#print("Dot: ", dot_product)
-				damage_hud.text = "%s hit" % str(sword_damage)
+				animation_player.play("damage_player")
 				enemy.damage(sword_damage)
 
 func update_hitbox_detection(delta: float):
@@ -131,13 +157,13 @@ func update_hitbox_detection(delta: float):
 	if hitbox_cooldown > 0:
 		return
 
-	hitbox_cooldown = 0.5
+	hitbox_cooldown = 0.3
 	
 	var bodies = hitbox_area.get_overlapping_bodies()
 	for body in bodies:
 		if body.is_in_group("enemies"):
 			var enemy: Enemy = body
-			var damage_amount = 1
+			var damage_amount = sword_damage
 			damage(damage_amount)
 
 func damage(amount: int):
@@ -146,19 +172,20 @@ func damage(amount: int):
 		
 	health -= amount
 	print("Player received ", amount, " damage hit. Total health: ", health)
-	healthbar.value = health
-	player_hud.text = str(health)
-	# Piscar o inimigo ao receber dano...
+	
+	# Piscar o player ao receber dano...
 	modulate = Color.RED
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_QUINT)
 	tween.tween_property(self, "modulate", Color.WHITE, 0.3)
-	
+
 	if health <= 0:
 		die()
 
 func die():
+	GameManager.end_game()
+	
 	if death_prefab:
 		var death_object = death_prefab.instantiate()
 		death_object.position = position
@@ -183,3 +210,9 @@ func update_ritual(delta: float):
 	ritual.damage_amount = ritual_damage
 	add_child(ritual)
 
+func update_attack(delta: float):
+	attack_cooldown2 -= delta
+	if attack_cooldown2 > 0: return
+	attack_cooldown2 = attack_interval
+	
+	attack()

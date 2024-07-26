@@ -1,31 +1,29 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcds3fpheiddn"]
 
 [ext_resource type="Script" path="res://systems/mob_spawner.gd" id="1_18ar4"]
-[ext_resource type="PackedScene" uid="uid://ch228tfwb0jl1" path="res://enemies/goblin.tscn" id="2_2x300"]
-[ext_resource type="PackedScene" uid="uid://b2mq3dycs6xpu" path="res://enemies/pawn.tscn" id="3_vv2go"]
-[ext_resource type="PackedScene" uid="uid://ck7whfwa5m81a" path="res://enemies/sheep.tscn" id="4_qymgc"]
+[ext_resource type="PackedScene" uid="uid://ch228tfwb0jl1" path="res://enemies/goblin.tscn" id="2_iud5v"]
+[ext_resource type="PackedScene" uid="uid://b2mq3dycs6xpu" path="res://enemies/pawn.tscn" id="3_v8p58"]
+[ext_resource type="PackedScene" uid="uid://ck7whfwa5m81a" path="res://enemies/sheep.tscn" id="4_vd6bw"]
 
 [sub_resource type="Curve2D" id="Curve2D_4s00y"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -381, -429, 0, 0, 0, 0, 1429, -422, 0, 0, 0, 0, 1401, 800, 0, 0, 0, 0, -783, 800, 0, 0, 0, 0, -687, -294)
+"points": PackedVector2Array(0, 0, 0, 0, -460, -321.229, 0, 0, 0, 0, 1208, -314.711, 0, 0, 0, 0, 1219, 675.978, 0, 0, 0, 0, -512, 672.253, 0, 0, 0, 0, -498, -323.091)
 }
 point_count = 5
 
 [node name="MobSpawner" type="Node2D"]
 position = Vector2(139, 147)
 script = ExtResource("1_18ar4")
-creatures = Array[PackedScene]([ExtResource("2_2x300"), ExtResource("3_vv2go"), ExtResource("4_qymgc")])
-frequency_mob_lv1 = 120.0
-frequency_mob_lv2 = 60.0
-frequency_mob_lv3 = 1.0
+creatures = Array[PackedScene]([ExtResource("2_iud5v"), ExtResource("3_v8p58"), ExtResource("4_vd6bw")])
 
 [node name="Path2D" type="Path2D" parent="."]
+scale = Vector2(0.787406, 0.790736)
 curve = SubResource("Curve2D_4s00y")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 unique_name_in_owner = true
-position = Vector2(-381, -429)
-rotation = 0.00386738
+position = Vector2(-460, -321.229)
+rotation = 0.00390766
 
 [node name="_Timer_60747" type="Timer" parent="Path2D/PathFollow2D"]
 wait_time = 0.2

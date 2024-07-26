@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://ck7whfwa5m81a"]
+[gd_scene load_steps=16 format=3 uid="uid://ck7whfwa5m81a"]
 
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_x73pd"]
 [ext_resource type="PackedScene" uid="uid://wpqwqorhe3ax" path="res://misc/skull.tscn" id="2_xa2b6"]
+[ext_resource type="PackedScene" uid="uid://bb0mkji48ts0o" path="res://misc/meat.tscn" id="3_4d6ym"]
 [ext_resource type="Texture2D" uid="uid://conj6xggvlr7m" path="res://addons/Tiny Swords/Resources/Sheep/HappySheep_Bouncing.png" id="3_8vyct"]
 [ext_resource type="Script" path="res://enemies/behaviors/follow_player.gd" id="4_hjrqw"]
 [ext_resource type="LabelSettings" uid="uid://bn0myy2cp2uhx" path="res://enemies/healthbar_font.tres" id="5_6e48j"]
@@ -58,7 +59,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5vg8g"]
 radius = 19.0
-height = 48.0
+height = 38.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wb82g"]
 blend_mode = 1
@@ -68,6 +69,8 @@ motion_mode = 1
 script = ExtResource("1_x73pd")
 health = 1
 death_prefab = ExtResource("2_xa2b6")
+drop_chance = 0.01
+drop_items = Array[PackedScene]([ExtResource("3_4d6ym")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -16)
@@ -76,7 +79,7 @@ autoplay = "default"
 frame_progress = 0.868262
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -19)
+position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_5vg8g")
 
 [node name="FollowPlayer" type="Node" parent="."]
@@ -84,6 +87,7 @@ script = ExtResource("4_hjrqw")
 speed = 1.8
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
 modulate = Color(1, 0.0901961, 0.0588235, 1)
 self_modulate = Color(1, 0.211765, 0.160784, 1)
 material = SubResource("CanvasItemMaterial_wb82g")
@@ -100,9 +104,13 @@ allow_lesser = true
 show_percentage = false
 
 [node name="EnemyHUD" type="Label" parent="."]
+visible = false
 offset_left = -2.0
 offset_top = -49.0
 offset_right = 38.0
 offset_bottom = -26.0
 text = "4"
 label_settings = ExtResource("5_6e48j")
+
+[node name="DamageDigitMarker" type="Marker2D" parent="."]
+position = Vector2(0, -36)
